@@ -88,7 +88,6 @@ env = suite.make(
 
 
 
-
 env.reset()
 gripper_closed = False
 
@@ -118,7 +117,7 @@ for obj_name in 'Milk', 'Bread', 'Cereal', 'Can':
             if np.linalg.norm(current_pos - target_pos) < 0.08:
                 print("Gripper close to object")
                 gripper_closed = True
-                env.robots[0].grip_action(1)  # Close the gripper
+                env.robots[0].grip_action(gripper = env.robots[0].gripper,gripper_action = [1])  # Close the gripper
 
         if gripper_closed:
             # Move to the target bin)
@@ -129,7 +128,7 @@ for obj_name in 'Milk', 'Bread', 'Cereal', 'Can':
 
             # Check if the gripper is close enough to the bin to release the object
             if np.linalg.norm(target_bin_pos - current_pos) < 0.02:
-                env.robots[0].grip_action(-1)  # Open the gripper
+                env.robots[0].grip_action(gripper = env.robots[0].gripper, gripper_action = [-1])  # Open the gripper
                 done = True
 
         obs, _, _, _ = env.step(action)
